@@ -1,6 +1,6 @@
 import React from 'react';
 import {PermissionsAndroid, StyleSheet, View, Text, Button} from 'react-native';
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 
 const requestLocationPermission = async () => {
@@ -8,25 +8,23 @@ const requestLocationPermission = async () => {
         const granted = await PermissionsAndroid.request(
             PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
             {
-                title: "Cool Photo App Camera Permission",
+                title: "Helpende Handjes Locatie Toegang",
                 message:
-                    "Cool Photo App needs access to your camera " +
-                    "so you can take awesome pictures.",
-                buttonNeutral: "Ask Me Later",
-                buttonNegative: "Cancel",
+                    "Helpende Handjes heeft toegang nodig tot je locatie",
+                buttonNeutral: "Vraag me later",
+                buttonNegative: "Annuleer",
                 buttonPositive: "OK"
             }
         );
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            console.log("You can use the camera");
+            console.log("Je kan de locatietoegang gebruiken");
         } else {
-            console.log("Camera permission denied");
+            console.log("Locatietoegang is geweigerd");
         }
     } catch (err) {
         console.warn(err);
     }
 };
-
 
 const styles = StyleSheet.create({
     container: {
@@ -61,11 +59,10 @@ export default class Googlemaps extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Button title="request permissions" onPress={requestLocationPermission} />
+                <Button title="request permissions" onPress={requestLocationPermission}/>
                 <MapView
                     provider={PROVIDER_GOOGLE}
-                     // remove if not using Google Maps
-                    style={[styles.map,{marginBottom: this.state.marginBottom}]}
+                    style={[styles.map, {marginBottom: this.state.marginBottom}]}
                     initialRegion={{
                         latitude: 35.788235,
                         longitude: -120.4324,
@@ -75,20 +72,16 @@ export default class Googlemaps extends React.Component {
 
                     showsUserLocation={true}
                     showsMyLocationButton={true}
-                    onRegionChangeComplete={(region)=> this.setState({
-                        coordinate:region
+                    onRegionChangeComplete={(region) => this.setState({
+                        coordinate: region
                     })}
-                    onMapReady = {()=>{this.setState({marginBottom:0})}}
-
+                    onMapReady={() => {
+                        this.setState({marginBottom: 0})
+                    }}
                 >
-                    <Marker coordinate={{ latitude: 37.78825, longitude: -122.4324 }} />
+                    <Marker coordinate={{latitude: 37.78825, longitude: -122.4324}}/>
                 </MapView>
             </View>
         );
-
-
     }
-
-
 }
-
