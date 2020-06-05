@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import { StyleSheet, View, Text } from 'react-native';
+import Navbar from '../components/Navbar';
+import ListSlider from '../components/ListSlider';
 import Googlemaps from "../components/Googlemaps";
 import Zoekbalk from "../components/Zoekbalk";
 
@@ -14,10 +16,14 @@ export default class Home extends Component {
     render() {
         return (
              <View style={styles.container}>
-              <Zoekbalk/>
-              <Googlemaps/>
+
+                  <Zoekbalk/>
+                  <Googlemaps/>
+                  <ListSlider/>
+                  <Navbar/>
+
              </View>
-                 );
+        );
     }
 }
 
