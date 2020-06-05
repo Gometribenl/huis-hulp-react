@@ -12,9 +12,8 @@ export default class Home extends React.Component {
         return (
             <View>
                 <Text>This is HOME!</Text>
-                <Button onPress={() => Actions.profile()} title="Profile" color="#841584"/>
+                <Button onPress={() => Actions.profile()} title="Profile"/>
             </View>
         );
     }
-
 }

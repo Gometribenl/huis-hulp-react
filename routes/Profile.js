@@ -1,28 +1,9 @@
 import React from 'react';
-import {View, Text, StyleSheet, SafeAreaView, ScrollView, Image} from 'react-native';
+import {View, Text, StyleSheet, SafeAreaView, ScrollView, Image, Button} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import axios from 'axios';
 
 export default class Profile extends React.Component {
-
-    chores = [
-        {
-            title: 'A very very long title, like a very very long title.',
-            desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-        },
-        {
-            title: 'title 2',
-            desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-        },
-        {
-            title: 'title 3',
-            desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-        },
-        {
-            title: 'title 4',
-            desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-        },
-    ];
 
     constructor(props) {
         super(props);
@@ -30,6 +11,7 @@ export default class Profile extends React.Component {
 
     state = {
         userData: [],
+        chores: [],
         id: 1,
     };
 
@@ -37,11 +19,16 @@ export default class Profile extends React.Component {
         axios.get('http://10.0.2.2:8000/user/user/' + this.state.id)
             .then(res => {
                 const nameList = res.data;
-                console.log(nameList.data[0]);
                 this.setState({ userData: nameList.data[0]});
             })
             .catch((error) => {
                 console.error(error)
+            })
+
+        axios.get('http://10.0.2.2:8000/user/chores/' + this.state.id)
+            .then(res => {
+                const choreList = res.data;
+                this.setState({ chores: choreList.data })
             })
     }
 
@@ -57,17 +44,20 @@ export default class Profile extends React.Component {
                         <Text style={styles.info}>Woonplaats: {this.state.userData.residence}</Text>
 
                     </View>
+
+                    <Button onPress={() => console.log('Toeter')} title="Nieuw Verzoek"/>
+
                     <View>
                         <Text style={styles.title}>Verzoeken</Text>
                         {
-                            this.chores.map((chore, i) =>
+                            this.state.chores.map((chore, i) =>
                                 <View key={i} style={styles.card}>
                                     <Image
                                         style={styles.helpimg}
                                         source={require('../images/hulp.png')}
                                     />
                                     <View>
-                                        <Text style={styles.cardTitle} numberOfLines={2}>{chore.title}</Text>
+                                        <Text style={styles.cardTitle} numberOfLines={2}>{chore.name}</Text>
                                         <Text style={styles.cardDesc} numberOfLines={1}>{chore.desc}</Text>
                                     </View>
                                 </View>
