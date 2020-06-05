@@ -1,5 +1,15 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import {StyleSheet, View} from 'react-native';
+
+export default class SearchBar extends React.Component {
+    render() {
+        return (
+            <View style={styles.header}>
+
+            </View>
+        );
+    }
+}
 
 const styles = StyleSheet.create({
     header: {
@@ -13,15 +23,3 @@ const styles = StyleSheet.create({
         marginTop: 15
     }
 });
-
-export default class Zoekbalk extends React.Component {
-
-    render() {
-        return (
-            <View style={styles.header}>
-
-            </View>
-        );
-    }
-}
-

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import Googlemaps from "../components/Googlemaps";
-import Zoekbalk from "../components/Zoekbalk";
+import GoogleMaps from "../components/GoogleMaps";
+import SearchBar from "../components/SearchBar";
 
 const styles = StyleSheet.create({
     container: {
@@ -14,8 +14,8 @@ export default class Home extends Component {
     render() {
         return (
              <View style={styles.container}>
-              <Zoekbalk/>
-              <Googlemaps/>
+              <SearchBar/>
+              <GoogleMaps/>
              </View>
                  );
     }
