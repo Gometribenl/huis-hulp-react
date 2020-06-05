@@ -5,17 +5,15 @@ import axios from 'axios';
 
 export default class Profile extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     state = {
         userData: [],
         chores: [],
         id: 1,
     };
 
-    componentDidMount() {
+    constructor(props) {
+        super(props);
+
         axios.get('http://10.0.2.2:8000/user/user/' + this.state.id)
             .then(res => {
                 const nameList = res.data;
