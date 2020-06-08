@@ -10,14 +10,14 @@ export default class App extends Component {
             <Router>
                 <Scene key='root' hideNavBar={true}>
                     <Scene
-                        component={CreateChore}
-                        key='createChore'
-                        title='CreateChore'
-                    />
-                    <Scene
                         component={Home}
                         key='home'
                         title='Home'
+                    />
+                    <Scene
+                        component={CreateChore}
+                        key='createChore'
+                        title='CreateChore'
                     />
                 </Scene>
             </Router>
