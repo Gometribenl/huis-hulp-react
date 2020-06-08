@@ -1,10 +1,15 @@
 import React, {Component} from 'react';
-import {Router, Scene} from 'react-native-router-flux';
+import {Router, Scene, Actions} from 'react-native-router-flux';
+
 import Home from "./routes/Home";
-import CreateChore from "./routes/CreateChore";
-// import Header from "./components/zoekbalk"
+import Profile from "./routes/Profile";
 
 export default class App extends Component {
+
+    componentDidMount() {
+        Actions.home();
+    }
+
     render() {
         return (
             <Router>
@@ -15,9 +20,9 @@ export default class App extends Component {
                         title='Home'
                     />
                     <Scene
-                        component={CreateChore}
-                        key='createChore'
-                        title='CreateChore'
+                        component={Profile}
+                        key='profile'
+                        title='Profile'
                     />
                 </Scene>
             </Router>

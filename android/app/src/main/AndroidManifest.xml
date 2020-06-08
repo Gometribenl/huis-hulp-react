@@ -31,5 +31,6 @@
             android:value="AIzaSyDu_yR8t3P3QyuUiq5kj9UWbkDsPw5j8LA"/>
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
     </application>
-
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 </manifest>
