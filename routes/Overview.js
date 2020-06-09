@@ -93,9 +93,7 @@ const styles = StyleSheet.create({
         maxWidth: '80%',
         color: '#8d8d8d',
     },
-    cardCaption: {
-        float: 'left'
-    },
+    cardCaption: { },
     helpimg: {
         width: '25%',
         height: '100%',
