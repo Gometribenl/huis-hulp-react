@@ -1,28 +1,19 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import { Actions } from 'react-native-router-flux';
-import Routes from "../Routes";
+import {View, Text, Button} from 'react-native';
+import {Actions} from 'react-native-router-flux';
 
 export default class Home extends React.Component {
 
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         return (
-
-
-                    <Text>This is HOME!</Text>
-
-
-
+            <View>
+                <Text>This is HOME!</Text>
+                <Button onPress={() => Actions.overview()} title="Overview"/>
+            </View>
         );
     }
 }
-
-// const Home = () => {
-//   const goToAbout = () => {
-//         Actions.about()
-//     }
-//     return (
-
-//     )
-// }
-// export default Home
