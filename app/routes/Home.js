@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, Button} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import ListSlider from '../components/ListSlider';
-import Navbar from '../components/Navbar';
+import NavBar from '../components/NavBar';
 import GoogleMaps from "../components/GoogleMaps";
 import SearchBar from "../components/SearchBar";
 import AppLayout from '../components/AppLayout';
@@ -21,14 +21,12 @@ export default class Home extends Component {
     render() {
         return (
             <AppLayout>
-             <View style={styles.container}>
-                  <Zoekbalk/>
-                  <Googlemaps/>
-             </View>
-
+                <View style={styles.container}>
+                    <SearchBar/>
+                    <GoogleMaps/>
+                </View>
                 <ListSlider/>
-                <Navbar/>
-
+                <NavBar/>
             </AppLayout>
         );
     }

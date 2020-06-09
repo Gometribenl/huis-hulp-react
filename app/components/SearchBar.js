@@ -1,11 +1,11 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, TextInput} from 'react-native';
 
 export default class SearchBar extends React.Component {
     render() {
         return (
             <View style={styles.header}>
-
+                <TextInput placeholder={"Zoeken..."}/>
             </View>
         );
     }
@@ -14,12 +14,11 @@ export default class SearchBar extends React.Component {
 const styles = StyleSheet.create({
     header: {
         width: '80%',
-        height: '9%',
-        backgroundColor: '#eee',
+        height: 39,
+        backgroundColor: '#fff',
         borderRadius: 50,
-        alignSelf: 'center',
-        zIndex: 100,
-        position: 'absolute',
-        marginTop: 15
+        zIndex: 1,
+        left: 10,
+        top: 11,
     }
 });

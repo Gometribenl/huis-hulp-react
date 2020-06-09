@@ -42,7 +42,6 @@ export default class Googlemaps extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Button title="request permissions" onPress={requestLocationPermission}/>
                 <MapView
                     provider={PROVIDER_GOOGLE}
                     style={[styles.map, {marginBottom: this.state.marginBottom}]}
@@ -60,8 +59,7 @@ export default class Googlemaps extends React.Component {
                     })}
                     onMapReady={() => {
                         this.setState({marginBottom: 0})
-                    }}
-                >
+                    }}>
                     <Marker coordinate={{latitude: 37.78825, longitude: -122.4324}}/>
                 </MapView>
             </View>

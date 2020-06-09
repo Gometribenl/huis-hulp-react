@@ -1,8 +1,13 @@
 import React, {Component} from 'react';
-import {Router, Scene, Actions} from 'react-native-router-flux';
+import {Actions, Router, Scene} from 'react-native-router-flux';
 
-import Home from "./routes/Home";
-import Profile from "./routes/Profile";
+import Home from "./app/routes/Home";
+import Profile from "./app/routes/Profile";
+import CreateChore from "./app/routes/CreateChore";
+
+import {Provider} from 'react-redux'
+import store from './app/store/store'
+
 
 export default class App extends Component {
 
@@ -12,20 +17,27 @@ export default class App extends Component {
 
     render() {
         return (
-            <Router>
-                <Scene key='root' hideNavBar={true}>
-                    <Scene
-                        component={Home}
-                        key='home'
-                        title='Home'
-                    />
-                    <Scene
-                        component={Profile}
-                        key='profile'
-                        title='Profile'
-                    />
-                </Scene>
-            </Router>
+            <Provider store={store}>
+                <Router>
+                    <Scene key='root' hideNavBar={true}>
+                        <Scene
+                            component={Home}
+                            key='home'
+                            title='Home'
+                        />
+                        <Scene
+                            component={Profile}
+                            key='profile'
+                            title='Profile'
+                        />
+                        <Scene
+                            component={CreateChore}
+                            key='createChore'
+                            title='CreateChore'
+                        />
+                    </Scene>
+                </Router>
+            </Provider>
         )
     }
 }

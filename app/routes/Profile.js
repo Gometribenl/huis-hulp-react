@@ -2,38 +2,39 @@ import React from 'react';
 import {View, Text, StyleSheet, SafeAreaView, ScrollView, Image, Button} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import axios from 'axios';
+import NavBar from "../components/NavBar";
 
 export default class Profile extends React.Component {
 
     state = {
         userData: [],
         chores: [],
-        id: 1,
+        id: 2,
     };
 
     constructor(props) {
         super(props);
 
-        axios.get('http://10.0.2.2:8000/user/user/' + this.state.id)
-            .then(res => {
+        axios.get('http://10.0.2.2:8000/user/user/' + this.state.id).then(res => {
                 const nameList = res.data;
                 this.setState({ userData: nameList.data[0]});
-            })
-            .catch((error) => {
+            }).catch((error) => {
                 console.error(error)
             })
 
-        axios.get('http://10.0.2.2:8000/user/chores/' + this.state.id)
-            .then(res => {
+        axios.get('http://10.0.2.2:8000/user/chores/' + this.state.id).then(res => {
+
                 const choreList = res.data;
                 this.setState({ chores: choreList.data })
-            })
+            }).catch((error) => {
+            console.error(error)
+        });
     }
 
     render() {
         return (
             <SafeAreaView style={styles.container}>
-                <ScrollView>
+                <ScrollView style={styles.wrapper}>
                     <View>
                         <Text style={styles.title}>Account gegevens</Text>
 
@@ -43,7 +44,7 @@ export default class Profile extends React.Component {
 
                     </View>
 
-                    <Button onPress={() => console.log('Toeter')} title="Nieuw Verzoek"/>
+                    <Button onPress={() => {Actions.replace('createChore')}} title="Nieuw Verzoek"/>
 
                     <View>
                         <Text style={styles.title}>Verzoeken</Text>
@@ -51,7 +52,7 @@ export default class Profile extends React.Component {
                             this.state.chores.map((chore, i) =>
                                 <View key={i} style={styles.card}>
                                     <Image
-                                        style={styles.helpimg}
+                                        style={styles.helping}
                                         source={require('../images/hulp.png')}
                                     />
                                     <View>
@@ -63,6 +64,7 @@ export default class Profile extends React.Component {
                         }
                     </View>
                 </ScrollView>
+                <NavBar/>
             </SafeAreaView>
         );
     }
@@ -71,7 +73,9 @@ export default class Profile extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 24,
+    },
+    wrapper: {
+        padding: 20,
     },
     info: {
         borderWidth: 2,
@@ -104,7 +108,7 @@ const styles = StyleSheet.create({
         maxWidth: '80%',
         color: '#8d8d8d',
     },
-    helpimg: {
+    helping: {
         width: '25%',
         height: '100%',
         borderColor: 'black',
