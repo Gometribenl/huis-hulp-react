@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import Googlemaps from "../components/Googlemaps";
 import Zoekbalk from "../components/Zoekbalk";
 import AppLayout from '../components/AppLayout';
+import { Actions } from 'react-native-router-flux';
 
 const styles = StyleSheet.create({
     container: {
@@ -24,6 +25,7 @@ export default class Home extends Component {
              <View style={styles.container}>
                   <Zoekbalk/>
                   <Googlemaps/>
+                 <Button title='Login' onPress={()=> Actions.login()} />
              </View>
 
                 <ListSlider/>
