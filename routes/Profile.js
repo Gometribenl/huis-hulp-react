@@ -54,6 +54,7 @@ export default class Profile extends React.Component {
                                         style={styles.helpimg}
                                         source={require('../images/hulp.png')}
                                     />
+
                                     <View>
                                         <Text style={styles.cardTitle} numberOfLines={2}>{chore.name}</Text>
                                         <Text style={styles.cardDesc} numberOfLines={1}>{chore.desc}</Text>

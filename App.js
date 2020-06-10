@@ -3,6 +3,7 @@ import {Router, Scene, Actions} from 'react-native-router-flux';
 
 import Home from "./routes/Home";
 import Profile from "./routes/Profile";
+import Overview from "./routes/Overview";
 
 export default class App extends Component {
 
@@ -23,6 +24,11 @@ export default class App extends Component {
                         component={Profile}
                         key='profile'
                         title='Profile'
+                    />
+                    <Scene
+                        component={Overview}
+                        key='overview'
+                        title='Overview'
                     />
                 </Scene>
             </Router>
