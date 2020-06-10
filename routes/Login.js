@@ -53,24 +53,24 @@ const styles = StyleSheet.create({
 
 const image = { uri: "https://images.unsplash.com/photo-1589705436822-720a68b246fb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80" };
 
-constructor(props) {
-    super(props);
-
-    axios.get('http://10.0.2.2:8000/user/user/' + this.state.id)
-        .then(res => {
-            const nameList = res.data;
-            this.setState({ userData: nameList.data[0]});
-        })
-        .catch((error) => {
-            console.error(error)
-        })
-
-    axios.get('http://10.0.2.2:8000/user/chores/' + this.state.id)
-        .then(res => {
-            const choreList = res.data;
-            this.setState({ chores: choreList.data })
-        })
-}
+// constructor(props) {
+//     super(props);
+//
+//     axios.get('http://10.0.2.2:8000/user/user/' + this.state.id)
+//         .then(res => {
+//             const nameList = res.data;
+//             this.setState({ userData: nameList.data[0]});
+//         })
+//         .catch((error) => {
+//             console.error(error)
+//         })
+//
+//     axios.get('http://10.0.2.2:8000/user/chores/' + this.state.id)
+//         .then(res => {
+//             const choreList = res.data;
+//             this.setState({ chores: choreList.data })
+//         })
+// }
 
 
 
