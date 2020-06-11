@@ -56,7 +56,7 @@ export default class Googlemaps extends React.Component {
 
     constructor(props) {
         super(props);
-        axios.get('http://192.168.178.28:80/chores/chores')
+        axios.get('http://10.0.2.2:8000/chores/chores')
             .then(res => {
                 const choreList = res.data;
                 this.setState({chores: choreList.data})
