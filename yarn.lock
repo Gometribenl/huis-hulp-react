@@ -1015,6 +1015,11 @@
     eslint-plugin-react-native "3.6.0"
     prettier "1.16.4"
 
+"@react-native-community/geolocation@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@react-native-community/geolocation/-/geolocation-2.0.2.tgz#ba8b40f560ead8d014740d1cdea970b33f19312e"
+  integrity sha512-tTNXRCgnhJBu79mulQwzabXRpDqfh/uaDqfHVpvF0nX4NTpolpy6mvTRiFg7eWFPGRArsnZz1EYp6rHfJWGgEA==
+
 "@react-navigation/core@^3.7.6":
   version "3.7.6"
   resolved "https://registry.yarnpkg.com/@react-navigation/core/-/core-3.7.6.tgz#e0244fcdc22937825b252197f70308bbe5709c58"
@@ -1824,6 +1829,11 @@ ci-info@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-2.0.0.tgz#67a9e964be31a51e15e5010d58e6f12834002f46"
   integrity sha512-5tK7EtrZ0N+OLFMthtqOj4fI2Jeb88C4CAZPu25LDVUgXJ0A3Js4PMGqrn0JU1W0Mh1/Z8wZzYPxqUrXeBboCQ==
+
+clamp@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/clamp/-/clamp-1.0.1.tgz#66a0e64011816e37196828fdc8c8c147312c8634"
+  integrity sha1-ZqDmQBGBbjcZaCj9yMjBRzEshjQ=
 
 class-utils@^0.3.5:
   version "0.3.6"
@@ -4146,7 +4156,7 @@ lodash.unescape@4.0.1:
   resolved "https://registry.yarnpkg.com/lodash.unescape/-/lodash.unescape-4.0.1.tgz#bf2249886ce514cda112fae9218cdc065211fc9c"
   integrity sha1-vyJJiGzlFM2hEvrpIYzcBlIR/Jw=
 
-lodash@^4.17.10, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.3.0:
+lodash@^4.0.0, lodash@^4.17.10, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.3.0:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
@@ -5143,7 +5153,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.4"
 
-prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -5174,11 +5184,6 @@ punycode@^2.1.0, punycode@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
-
-python2@0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/python2/-/python2-0.0.1.tgz#8bb6f03346c1aeb156a0dcae7c1cc3d903e06310"
-  integrity sha1-i7bwM0bBrrFWoNyufBzD2QPgYxA=
 
 qs@~6.5.2:
   version "6.5.2"
@@ -5227,6 +5232,18 @@ react-native-gesture-handler@^1.6.1:
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
+react-native-maps@^0.27.1:
+  version "0.27.1"
+  resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.27.1.tgz#2f10cd417bb2fd938c9e015b1c9b6d9b1a44b97f"
+  integrity sha512-HygBkZBecTnIVRYrSiLRAvu4OmXOYso/A7c6Cy73HkOh9CgGV8Ap5eBea24tvmFGptjj5Hg8AJ94/YbmWK1Okw==
+
+react-native-material-bottom-navigation@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-material-bottom-navigation/-/react-native-material-bottom-navigation-1.0.5.tgz#4552cc8529ba722f044a4a66d7d4deb73d931c82"
+  integrity sha512-SpbFHH/2cJELZ9z4THE7xMCM8uBBvjqfN3+BB30IfM0144gxHFSVdzFoTj7I2U7jV/cWQbeJ8vRN99ACTlSpwA==
+  dependencies:
+    prop-types "^15.6.1"
+
 react-native-reanimated@^1.9.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-1.9.0.tgz#38676c99dd585504fdc7331efb45e5f48ec7339a"
@@ -5267,6 +5284,15 @@ react-native-tab-view@^2.11.0:
   version "2.14.2"
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-2.14.2.tgz#5f1e2063f632ec7f8ab27374ecaf72677788b445"
   integrity sha512-BkQ9htmUM3iroMTgIdCSP+1On8bRHkgFHiOCAnk9OhoFlQOvwZebSU6k705QBDeuuwEVIIT4+C+nT2MvXI/FEQ==
+
+react-native-vector-icons@^6.6.0:
+  version "6.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-6.6.0.tgz#66cf004918eb05d90778d64bd42077c1800d481b"
+  integrity sha512-MImKVx8JEvVVBnaShMr7/yTX4Y062JZMupht1T+IEgbqBj4aQeQ1z2SH4VHWKNtWtppk4kz9gYyUiMWqx6tNSw==
+  dependencies:
+    lodash "^4.0.0"
+    prop-types "^15.6.2"
+    yargs "^13.2.2"
 
 react-native@0.62.2:
   version "0.62.2"
@@ -5620,6 +5646,14 @@ rimraf@~2.2.6:
   version "2.2.8"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
   integrity sha1-5Dm+Kq7jJzIZUnMPmaiSnk/FBYI=
+
+rn-sliding-up-panel@^2.4.2:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/rn-sliding-up-panel/-/rn-sliding-up-panel-2.4.2.tgz#a42994b8e302775b9c6f539c450cf407c3fe2a60"
+  integrity sha512-cnssaYxpOH/33XIv9fIPT7EFIBvdgaqiei1NVmNKZDfGdgNCfrcyyDHH4V56Uu0t3uyg31cObjPDizuKEJHh2g==
+  dependencies:
+    clamp "^1.0.1"
+    prop-types "^15.7.2"
 
 rsvp@^4.8.4:
   version "4.8.5"
@@ -6770,7 +6804,7 @@ yargs@^12.0.5:
     y18n "^3.2.1 || ^4.0.0"
     yargs-parser "^11.1.1"
 
-yargs@^13.3.0:
+yargs@^13.2.2, yargs@^13.3.0:
   version "13.3.2"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-13.3.2.tgz#ad7ffefec1aa59565ac915f82dccb38a9c31a2dd"
   integrity sha512-AX3Zw5iPruN5ie6xGRIDgqkT+ZhnRlZMLMHAs8tg7nRruy2Nb+i5o9bwghAogtM08q1dpr2LVoS8KSTMYpWXUw==
