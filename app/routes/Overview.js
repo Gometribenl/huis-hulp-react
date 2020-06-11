@@ -1,6 +1,19 @@
 import React from 'react';
-import {View, Text, StyleSheet, SafeAreaView, ScrollView, Image, TextInput} from 'react-native';
+import {
+    View,
+    Text,
+    StyleSheet,
+    SafeAreaView,
+    ScrollView,
+    Image,
+    TextInput,
+    TouchableHighlight,
+    Button
+} from 'react-native';
 import axios from 'axios';
+import {Actions} from "react-native-router-flux";
+import Navbar from '../components/Navbar';
+import AppLayout from "../components/AppLayout";
 
 export default class Overview extends React.Component {
 
@@ -14,44 +27,52 @@ export default class Overview extends React.Component {
         axios.get('http://10.0.2.2:8000/chores/chores')
             .then(res => {
                 const choreList = res.data;
-                this.setState({ chores: choreList.data })
+                this.setState({chores: choreList.data})
             })
             .catch((error) => {
                 console.error(error)
             })
     }
 
+    goToCard = (index) => {
+        console.log('Action!');
+        console.log(this.state.chores[index]);
+    }
+
     render() {
         return (
-            <SafeAreaView style={styles.container}>
-                <ScrollView>
+            <AppLayout>
+                <ScrollView style={styles.container}>
                     <View style={styles.searchBar}>
                         <Text style={styles.label}>Sorteren op: </Text>
                         <TextInput
                             style={styles.searchInput}
-                            placeholder="hello"
+                            placeholder="....."
                             id="Search"
                         />
                     </View>
 
                     {
                         this.state.chores.map((chore, i) =>
-                            <View key={i} style={styles.card}>
-                                <Image
-                                    style={styles.helpimg}
-                                    source={require('../images/hulp.png')}
-                                />
+                            <TouchableHighlight key={i} onPress={() => this.goToCard(i)} underlayColor={'#c6c6c6'}>
+                                <View style={styles.card}>
+                                    <Image
+                                        style={styles.helpimg}
+                                        source={require('../images/hulp.png')}
+                                    />
 
-                                <View>
-                                    <Text style={styles.cardTitle} numberOfLines={2}>{chore.name}</Text>
-                                    <Text style={styles.cardDesc} numberOfLines={1}>{chore.desc}</Text>
-                                    <Text style={styles.cardCaption}>5km bij jou vandaan</Text>
+                                    <View>
+                                        <Text style={styles.cardTitle} numberOfLines={2}>{chore.name}</Text>
+                                        <Text style={styles.cardDesc} numberOfLines={2}>{chore.desc}</Text>
+                                        <Text style={styles.cardCaption}>5km bij jou vandaan</Text>
+                                    </View>
                                 </View>
-                            </View>
+                            </TouchableHighlight>
                         )
                     }
                 </ScrollView>
-            </SafeAreaView>
+                <Navbar/>
+            </AppLayout>
         );
     }
 }
@@ -77,11 +98,11 @@ const styles = StyleSheet.create({
     card: {
         borderColor: 'black',
         borderWidth: 2,
-        margin: 15,
-        padding: 5,
+        marginVertical: 15,
+        marginHorizontal: 0,
         flexDirection: 'row',
         flex: 1,
-        height: 100,
+        height: 150,
     },
     cardTitle: {
         fontSize: 25,
@@ -93,11 +114,16 @@ const styles = StyleSheet.create({
         maxWidth: '80%',
         color: '#8d8d8d',
     },
-    cardCaption: { },
+    cardCaption: {
+        color: '#8d8d8d',
+        fontSize: 16,
+        position: 'absolute',
+        right: 30,
+        bottom: 0,
+    },
     helpimg: {
         width: '25%',
-        height: '100%',
-        borderColor: 'black',
+        height: 'auto',
         marginRight: 10,
         backgroundColor: '#d9d9d9',
     },

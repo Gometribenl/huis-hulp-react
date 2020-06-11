@@ -28,23 +28,7 @@ const requestLocationPermission = async () => {
     }
 };
 
-const styles = StyleSheet.create({
-    container: {
-        ...StyleSheet.absoluteFillObject,
-        alignItems: 'center',
-        flex: 1,
-        height: null,
-        justifyContent: 'flex-end',
-        resizeMode: 'cover',
-        width: null,
-    },
-    map: {
-        ...StyleSheet.absoluteFillObject,
-    },
-});
-
 export default class Googlemaps extends React.Component {
-
     state = {
         chores: [],
         marginBottom: 1,
@@ -56,7 +40,7 @@ export default class Googlemaps extends React.Component {
 
     constructor(props) {
         super(props);
-        axios.get('http://192.168.178.28:80/chores/chores')
+        axios.get('http://10.0.2.2:8000/chores/chores')
             .then(res => {
                 const choreList = res.data;
                 this.setState({chores: choreList.data})
@@ -94,7 +78,6 @@ export default class Googlemaps extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Button title="request permissions" onPress={requestLocationPermission}/>
                 <MapView
                     provider={PROVIDER_GOOGLE}
                     style={[styles.map, {marginBottom: this.state.marginBottom}]}
@@ -123,15 +106,28 @@ export default class Googlemaps extends React.Component {
 
                     onMapReady={() => {
                         this.setState({marginBottom: 0})
-                    }}
-                >
+                    }}>
                     {this.state.chores.map((chore, i) =>
                         <Marker key={i} coordinate={{latitude: chore.longitude, longitude: chore.latitude}}
                                 title={chore.name}/>
                     )}
-
                 </MapView>
             </View>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        ...StyleSheet.absoluteFillObject,
+        alignItems: 'center',
+        flex: 1,
+        height: null,
+        justifyContent: 'flex-end',
+        resizeMode: 'cover',
+        width: null,
+    },
+    map: {
+        ...StyleSheet.absoluteFillObject,
+    },
+});
