@@ -1,22 +1,11 @@
 import React from 'react';
-import {
-    View,
-    Text,
-    StyleSheet,
-    SafeAreaView,
-    ScrollView,
-    Image,
-    TextInput,
-    TouchableHighlight,
-    Button
-} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Image, TextInput, TouchableHighlight} from 'react-native';
 import axios from 'axios';
 import {Actions} from "react-native-router-flux";
-import Navbar from '../components/Navbar';
+import NavBar from '../components/NavBar';
 import AppLayout from "../components/AppLayout";
 
 export default class Overview extends React.Component {
-
     state = {
         chores: [],
     };
@@ -31,7 +20,7 @@ export default class Overview extends React.Component {
             })
             .catch((error) => {
                 console.error(error)
-            })
+            });
     }
 
     goToCard = (index) => {
@@ -51,7 +40,6 @@ export default class Overview extends React.Component {
                             id="Search"
                         />
                     </View>
-
                     {
                         this.state.chores.map((chore, i) =>
                             <TouchableHighlight key={i} onPress={() => this.goToCard(i)} underlayColor={'#c6c6c6'}>
@@ -71,7 +59,7 @@ export default class Overview extends React.Component {
                         )
                     }
                 </ScrollView>
-                <Navbar/>
+                <NavBar/>
             </AppLayout>
         );
     }
