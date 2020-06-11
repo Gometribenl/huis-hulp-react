@@ -2,6 +2,8 @@ import React from 'react';
 import {View, Text, StyleSheet, SafeAreaView, ScrollView, Image, Button} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import axios from 'axios';
+import Navbar from '../components/Navbar';
+import AppLayout from "../components/AppLayout";
 
 export default class Profile extends React.Component {
 
@@ -32,8 +34,8 @@ export default class Profile extends React.Component {
 
     render() {
         return (
-            <SafeAreaView style={styles.container}>
-                <ScrollView>
+            <AppLayout>
+                <ScrollView style={styles.container}>
                     <View>
                         <Text style={styles.title}>Account gegevens</Text>
 
@@ -64,7 +66,8 @@ export default class Profile extends React.Component {
                         }
                     </View>
                 </ScrollView>
-            </SafeAreaView>
+                <Navbar/>
+            </AppLayout>
         );
     }
 }

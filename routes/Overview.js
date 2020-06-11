@@ -1,6 +1,19 @@
 import React from 'react';
-import {View, Text, StyleSheet, SafeAreaView, ScrollView, Image, TextInput, TouchableHighlight} from 'react-native';
+import {
+    View,
+    Text,
+    StyleSheet,
+    SafeAreaView,
+    ScrollView,
+    Image,
+    TextInput,
+    TouchableHighlight,
+    Button
+} from 'react-native';
 import axios from 'axios';
+import {Actions} from "react-native-router-flux";
+import Navbar from '../components/Navbar';
+import AppLayout from "../components/AppLayout";
 
 export default class Overview extends React.Component {
 
@@ -28,8 +41,8 @@ export default class Overview extends React.Component {
 
     render() {
         return (
-            <SafeAreaView style={styles.container}>
-                <ScrollView>
+            <AppLayout>
+                <ScrollView style={styles.container}>
                     <View style={styles.searchBar}>
                         <Text style={styles.label}>Sorteren op: </Text>
                         <TextInput
@@ -58,7 +71,8 @@ export default class Overview extends React.Component {
                         )
                     }
                 </ScrollView>
-            </SafeAreaView>
+                <Navbar/>
+            </AppLayout>
         );
     }
 }
