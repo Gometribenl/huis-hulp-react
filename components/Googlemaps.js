@@ -83,6 +83,14 @@ export default class Googlemaps extends React.Component {
         );
     }
 
+    onRegionChange = (region) => {
+        console.log('onRegionChange', region);
+    };
+
+    onRegionChangeComplete = (region) => {
+        console.log('onRegionChangeComplete', region);
+    };
+
     render() {
         return (
             <View style={styles.container}>
@@ -109,13 +117,10 @@ export default class Googlemaps extends React.Component {
                     showsUserLocation={true}
                     followsUserLocation={true}
                     showsMyLocationButton={true}
-                    onRegionChangeComplete={(newRegion) => this.setState({
-                        latitude: newRegion.latitude,
-                        longitude: newRegion.longitude,
-                        latitudeDelta: newRegion.latitudeDelta,
-                        longitudeDelta: newRegion.longitudeDelta,
 
-                    })}
+                    onRegionChange={this.onRegionChange}
+                    onRegionChangeComplete={this.onRegionChangeComplete}
+
                     onMapReady={() => {
                         this.setState({marginBottom: 0})
                     }}
