@@ -1,31 +1,20 @@
 import React from 'react';
-import {View, Text, StyleSheet, ScrollView, Image, TextInput, TouchableHighlight} from 'react-native';
-import axios from 'axios';
-import {Actions} from "react-native-router-flux";
-import NavBar from '../components/NavBar';
+import {Image, ScrollView, StyleSheet, Text, TextInput, TouchableHighlight, View} from 'react-native';
+import {connect} from 'react-redux';
 import AppLayout from "../components/AppLayout";
 
-export default class Overview extends React.Component {
+class Overview extends React.Component {
     state = {
         chores: [],
     };
 
-    constructor(props) {
-        super(props);
-
-        axios.get('http://10.0.2.2:8000/chores/chores')
-            .then(res => {
-                const choreList = res.data;
-                this.setState({chores: choreList.data})
-            })
-            .catch((error) => {
-                console.error(error)
-            });
-    }
-
     goToCard = (index) => {
         console.log('Action!');
-        console.log(this.state.chores[index]);
+        console.log(this.props.chores[index]);
+    }
+
+    componentDidMount() {
+        console.log(this.props.chores)
     }
 
     render() {
@@ -41,7 +30,7 @@ export default class Overview extends React.Component {
                         />
                     </View>
                     {
-                        this.state.chores.map((chore, i) =>
+                        this.props.chores.map((chore, i) =>
                             <TouchableHighlight key={i} onPress={() => this.goToCard(i)} underlayColor={'#c6c6c6'}>
                                 <View style={styles.card}>
                                     <Image
@@ -59,11 +48,17 @@ export default class Overview extends React.Component {
                         )
                     }
                 </ScrollView>
-                <NavBar/>
             </AppLayout>
         );
     }
 }
+
+const mapStateToProps = (state) => ({
+    token: state.userReducer.token,
+    chores: state.choresReducer.chores,
+});
+
+export default connect(mapStateToProps)(Overview);
 
 const styles = StyleSheet.create({
     container: {
