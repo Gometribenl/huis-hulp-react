@@ -1,31 +1,82 @@
 import React, {Component} from 'react';
-import {ImageBackground, StyleSheet, View,} from 'react-native';
+import {ImageBackground, StyleSheet, TextInput, View} from 'react-native';
 import AppLayout from '../components/AppLayout';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {Button, Input, Text} from 'react-native-elements';
+import {Button, Text} from 'react-native-elements';
 import {Actions} from 'react-native-router-flux';
+import {setToken, updateChores, setUserData, updatePersonalChores} from "../actions";
+import {connect} from 'react-redux';
 import axios from 'axios';
+import {Parameters} from "../../global";
 
 const image = {uri: "https://images.unsplash.com/photo-1589705436822-720a68b246fb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"};
 
-export default class Login extends Component {
+class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            credentials: '',
-            password: '',
+            email: 'test@test.nl',
+            password: '123',
+            token: null,
         }
     }
 
     login = () => {
         let credentials = {
-            'username': 'test@test.nl',
-            'password': '123',
+            'email': this.state.email,
+            'password': this.state.password,
         };
-        axios.post('http://10.0.2.2:8000/auth/login/', credentials).then((response) => {
-            console.log(response);
+
+        axios.post(Parameters.apiDomain + '/auth/login', credentials).then((response) => {
+            if (response.data.statuscode === 200) {
+                let user_id = response.data.data[0].id;
+                let token = response.data.data[0].token;
+                this.props.dispatch(setToken(token));
+                this.populateUserReducer(token, user_id);
+                this.requestPersonalChores(token, user_id);
+                this.populateChoresReducer(token);
+            }
+        }).then(() =>{
+            Actions.home();
         }).catch((error) => {
             console.error(error)
+        });
+    }
+
+    populateUserReducer = (token, user_id) => {
+        axios.get(Parameters.apiDomain + '/user/user/' + user_id, {
+            headers: {
+                'Authorization': 'Bearer ' + token,
+            }
+        }).then((response) => {
+            this.props.dispatch(setUserData(response.data.data[0]));
+        }).catch((error) => {
+            console.error(error)
+        })
+    }
+
+    populateChoresReducer = (token) => {
+        axios.get(Parameters.apiDomain + '/chores/chores', {
+            headers: {
+                'Authorization': 'Bearer ' + token,
+            }
+        }).then((response) => {
+            console.log(response);
+            this.props.dispatch(updateChores(response.data.data));
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+
+    requestPersonalChores = (token, user_id) => {
+        axios.get(Parameters.apiDomain + '/chores/chores/' + user_id, {
+            headers: {
+                'Authorization': 'Bearer ' + token,
+            }
+        }).then((response) => {
+            this.props.dispatch(updatePersonalChores(response.data.data));
+        }).catch((error) => {
+            console.log(error);
         });
     }
 
@@ -36,13 +87,19 @@ export default class Login extends Component {
                     <View style={styles.container}>
                         <Text style={styles.text}>Welkom!</Text>
                         <View style={styles.form}>
-                            <Input placeholder='username'
-                                   leftIcon={<Icon name='user' size={24} color='black'/>}
+                            <TextInput placeholder='email'
+                                       leftIcon={<Icon name='user' size={24} color='black'/>}
+                                       onChangeText={(value) => {
+                                           this.setState({email: value})
+                                       }}
                             />
-                            <Input placeholder='password'
-                                   leftIcon={<Icon name='lock' size={24} color='black'/>}
+                            <TextInput placeholder='wachtwoord'
+                                       leftIcon={<Icon name='lock' size={24} color='black'/>}
+                                       onChangeText={(value) => {
+                                           this.setState({password: value})
+                                       }}
                             />
-                            <Button onPress={() => Actions.login()} title="Aanmelden"/>
+                            <Button onPress={() => this.login()} title="Aanmelden"/>
                         </View>
                         <View style={styles.buttonRegisteren}>
                             <Button
@@ -57,6 +114,12 @@ export default class Login extends Component {
     }
 }
 
+const mapStateToProps = (state) => ({
+    token: state.userReducer.token,
+});
+
+export default connect(mapStateToProps)(Login);
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -67,8 +130,6 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 20,
         textAlign: 'center',
-
-
     },
     image: {
         flex: 1,

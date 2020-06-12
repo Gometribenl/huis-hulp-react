@@ -4,6 +4,7 @@ import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import axios from 'axios';
 import MapMarker from "react-native-maps/lib/components/MapMarker";
+import {connect} from "react-redux";
 
 const requestLocationPermission = async () => {
     try {
@@ -28,7 +29,7 @@ const requestLocationPermission = async () => {
     }
 };
 
-export default class Googlemaps extends React.Component {
+class GoogleMaps extends React.Component {
     state = {
         chores: [],
         marginBottom: 1,
@@ -40,14 +41,6 @@ export default class Googlemaps extends React.Component {
 
     constructor(props) {
         super(props);
-        axios.get('http://10.0.2.2:8000/chores/chores')
-            .then(res => {
-                const choreList = res.data;
-                this.setState({chores: choreList.data})
-            })
-            .catch((error) => {
-                console.error(error)
-            })
         this.getCurrentPosition()
     }
 
@@ -66,6 +59,15 @@ export default class Googlemaps extends React.Component {
             {enableHighAccuracy: false, timeout: 200000, maximumAge: 1000},
         );
     }
+
+    onRegionChange = (region) => {
+        console.log('onRegionChange', region);
+    };
+
+    onRegionChangeComplete = (region) => {
+        console.log('onRegionChangeComplete', region);
+    };
+
     render() {
         return (
             <View style={styles.container}>
@@ -91,17 +93,14 @@ export default class Googlemaps extends React.Component {
                     showsUserLocation={true}
                     followsUserLocation={true}
                     showsMyLocationButton={true}
-                    onRegionChangeComplete={(newRegion) => this.setState({
-                        latitude: newRegion.latitude,
-                        longitude: newRegion.longitude,
-                        latitudeDelta: newRegion.latitudeDelta,
-                        longitudeDelta: newRegion.longitudeDelta,
 
-                    })}
+                    onRegionChange={this.onRegionChange}
+                    onRegionChangeComplete={this.onRegionChangeComplete}
+
                     onMapReady={() => {
                         this.setState({marginBottom: 0})
                     }}>
-                    {this.state.chores.map((chore, i) =>
+                    {this.props.chores.map((chore, i) =>
                         <Marker key={i} coordinate={{latitude: chore.longitude, longitude: chore.latitude}}
                                 title={chore.name}/>
                     )}
@@ -110,6 +109,12 @@ export default class Googlemaps extends React.Component {
         );
     }
 }
+
+const mapStateToProps = (state) => ({
+    chores: state.choresReducer.chores,
+});
+
+export default connect(mapStateToProps)(GoogleMaps);
 
 const styles = StyleSheet.create({
     container: {

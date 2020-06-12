@@ -2,20 +2,19 @@ import React, {Component} from 'react';
 import {Button, PermissionsAndroid, SafeAreaView, StyleSheet, Text, TextInput, View} from 'react-native';
 import NavBar from "../components/NavBar";
 import axios from 'axios';
+import {connect} from "react-redux";
+import {Parameters} from '../../global';
 
-export default class CreateChore extends Component {
+class CreateChore extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            chore: {
-                title: '',
-                description: '',
-                longitude: 52.4893802,
-                latitude: 6.5548126,
-            }
+            title: '',
+            description: '',
         }
     }
-    async requestCameraAccess() {
+
+    requestCameraAccess() {
         PermissionsAndroid.request(
             PermissionsAndroid.PERMISSIONS.CAMERA,
             {
@@ -24,7 +23,6 @@ export default class CreateChore extends Component {
                     'so you can take awesome pictures.'
             }
         ).then((granted) => {
-            console.log(granted);
             if (granted === PermissionsAndroid.RESULTS.GRANTED) {
                 console.log("You can use the camera")
             } else {
@@ -34,13 +32,23 @@ export default class CreateChore extends Component {
     };
 
     saveChore = () => {
-        axios.post('http://127.0.0.1:8000/chores', this.state.chore).then(() => {
+        let chore = {
+            title: this.state.title,
+            description: this.state.description,
+            longitude: 52.4893802,
+            latitude: 6.5548126,
+        }
 
+        axios.post(Parameters.apiDomain + '/chores/chores', chore, {
+            headers: {
+                'Authorization': 'Bearer ' + this.props.token,
+            }
+        }).then((response) => {
+            console.log(response);
         }).catch((error) => {
-            console.error(error)
+            console.log(error);
         });
     }
-
 
     render() {
         return (
@@ -50,18 +58,31 @@ export default class CreateChore extends Component {
                     <View style={styles.uploadImageButtonContainer}>
                         <Button
                             title={'Upload een afbeelding'}
-                            color={"lightblue"}
-                            onPress={this.requestCameraAccess}
+                            color={"blue"}
+                            onPress={() => {
+                                this.requestCameraAccess()
+                            }}
                         />
                     </View>
-                    <TextInput id="title" style={styles.titleInput} type="text" placeholder={"Titel"}/>
+                    <TextInput id="title" style={styles.titleInput} type="text" placeholder={"Titel"}
+                               onChangeText={(value) => {this.setState({title: value})}}/>
                     <TextInput id="description"
                                multiline={true}
                                primart={'blue'}
                                numberOfLines={5}
                                style={styles.descriptionInput}
                                type="text"
-                               placeholder={"Omschrijving"}/>
+                               placeholder={"Omschrijving"}
+                               onChangeText={(value) => {this.setState({description: value})}}/>
+                    <View style={styles.uploadImageButtonContainer}>
+                        <Button
+                            title={'Opslaan'}
+                            color={"red"}
+                            onPress={() => {
+                                this.saveChore()
+                            }}
+                        />
+                    </View>
                 </View>
                 <NavBar style={styles.navBar}/>
             </SafeAreaView>
@@ -69,12 +90,18 @@ export default class CreateChore extends Component {
     };
 }
 
+const mapStateToProps = (state) => ({
+    token: state.userReducer.token,
+});
+
+export default connect(mapStateToProps)(CreateChore);
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
     wrapper: {
-      height: '92.5%',
+        height: '92.5%',
     },
     navBar: {
         position: 'absolute',

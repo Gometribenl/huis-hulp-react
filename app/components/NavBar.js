@@ -16,12 +16,6 @@ export default class NavBar extends Component {
             barColor: AppColors.AppColors.primary.regular,
         },
         {
-            key: 'overview',
-            icon: 'list',
-            barColor: AppColors.AppColors.primary.regular,
-            badgeCount: 0,
-        },
-        {
             key: 'profile',
             icon: 'user',
             barColor: AppColors.AppColors.primary.regular,

@@ -1,37 +1,12 @@
 import React from 'react';
-import {View, Text, StyleSheet, SafeAreaView, ScrollView, Image, Button} from 'react-native';
+import {Button, Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import axios from 'axios';
 import AppLayout from "../components/AppLayout";
 import NavBar from "../components/NavBar";
+import {connect} from "react-redux";
 
-export default class Profile extends React.Component {
-
-    state = {
-        userData: [],
-        chores: [],
-        id: 2,
-    };
-
-    constructor(props) {
-        super(props);
-
-        axios.get('http://10.0.2.2:8000/user/user/' + this.state.id).then(res => {
-                const nameList = res.data;
-                this.setState({ userData: nameList.data[0]});
-            }).catch((error) => {
-                console.error(error)
-            })
-
-        axios.get('http://10.0.2.2:8000/user/chores/' + this.state.id).then(res => {
-
-                const choreList = res.data;
-                this.setState({ chores: choreList.data })
-            }).catch((error) => {
-            console.error(error)
-        });
-    }
-
+class Profile extends React.Component {
     render() {
         return (
             <AppLayout>
@@ -39,24 +14,25 @@ export default class Profile extends React.Component {
                     <View>
                         <Text style={styles.title}>Account gegevens</Text>
 
-                        <Text style={styles.info}>Naam: {this.state.userData.name}</Text>
-                        <Text style={styles.info}>Adres: {this.state.userData.address}</Text>
-                        <Text style={styles.info}>Woonplaats: {this.state.userData.residence}</Text>
+                        <Text style={styles.info}>Naam: {this.props.name}</Text>
+                        <Text style={styles.info}>Adres: {this.props.address}</Text>
+                        <Text style={styles.info}>Woonplaats: {this.props.residence}</Text>
 
                     </View>
 
-                    <Button onPress={() => {Actions.replace('createChore')}} title="Nieuw Verzoek"/>
+                    <Button onPress={() => {
+                        Actions.replace('createChore')
+                    }} title="Nieuw Verzoek"/>
 
                     <View>
                         <Text style={styles.title}>Verzoeken</Text>
                         {
-                            this.state.chores.map((chore, i) =>
+                            this.props.personalChores.map((chore, i) =>
                                 <View key={i} style={styles.card}>
                                     <Image
                                         style={styles.helping}
                                         source={require('../images/hulp.png')}
                                     />
-
                                     <View>
                                         <Text style={styles.cardTitle} numberOfLines={2}>{chore.name}</Text>
                                         <Text style={styles.cardDesc} numberOfLines={1}>{chore.desc}</Text>
@@ -66,11 +42,19 @@ export default class Profile extends React.Component {
                         }
                     </View>
                 </ScrollView>
-                <NavBar/>
             </AppLayout>
         );
     }
 }
+
+const mapStateToProps = (state) => ({
+    name: state.userReducer.user.name,
+    address: state.userReducer.user.address,
+    residence: state.userReducer.user.residence,
+    personalChores: state.choresReducer.personalChores,
+});
+
+export default connect(mapStateToProps)(Profile);
 
 const styles = StyleSheet.create({
     container: {

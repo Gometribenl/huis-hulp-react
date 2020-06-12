@@ -21,8 +21,8 @@ export default class Home extends Component {
         return (
             <AppLayout>
                 <View style={styles.container}>
-                    <SearchBar/>
                     <GoogleMaps/>
+                    <SearchBar/>
                 </View>
                 <ListSlider/>
                 <NavBar/>
