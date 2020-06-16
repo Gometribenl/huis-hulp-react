@@ -4,7 +4,7 @@ import Home from "../routes/Home";
 import Profile from "../routes/Profile";
 import Overview from "../routes/Overview";
 import Login from "../routes/Login";
-import Register from "../routes/Registreren";
+import Register from "../routes/Register";
 import CreateChore from "../routes/CreateChore";
 import {connect} from 'react-redux'
 

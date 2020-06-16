@@ -13,10 +13,6 @@ class Overview extends React.Component {
         console.log(this.props.chores[index]);
     }
 
-    componentDidMount() {
-        console.log(this.props.chores)
-    }
-
     render() {
         return (
             <AppLayout>
@@ -37,7 +33,6 @@ class Overview extends React.Component {
                                         style={styles.helpimg}
                                         source={require('../images/hulp.png')}
                                     />
-
                                     <View>
                                         <Text style={styles.cardTitle} numberOfLines={2}>{chore.name}</Text>
                                         <Text style={styles.cardDesc} numberOfLines={2}>{chore.desc}</Text>
