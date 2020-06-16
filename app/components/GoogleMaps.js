@@ -81,7 +81,7 @@ class GoogleMaps extends React.Component {
                             longitudeDelta: this.state.longdelt,
                             latitudeDelta: this.state.latdelt
                         }
-                    }
+                   }
 
                     region={{
                         longitude: this.state.longitude,
