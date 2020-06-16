@@ -81,14 +81,14 @@ export default class Googlemaps extends React.Component {
                 <MapView
                     provider={PROVIDER_GOOGLE}
                     style={[styles.map, {marginBottom: this.state.marginBottom}]}
-                    initialRegion={
-                        {
-                            longitude: this.state.longitude,
-                            latitude: this.state.latitude,
-                            longitudeDelta: this.state.longdelt,
-                            latitudeDelta: this.state.latdelt
-                        }
-                    }
+                   //  initialRegion={
+                   //      {
+                   //          longitude: this.state.longitude,
+                   //          latitude: this.state.latitude,
+                   //          longitudeDelta: this.state.longdelt,
+                   //          latitudeDelta: this.state.latdelt
+                   //      }
+                   // }
 
                     region={{
                         longitude: this.state.longitude,
@@ -105,8 +105,9 @@ export default class Googlemaps extends React.Component {
                     onRegionChangeComplete={this.onRegionChangeComplete}
 
                     onMapReady={() => {
-                        this.setState({marginBottom: 0})
-                    }}>
+                    this.setState({marginBottom: 0})
+                    }}
+                    >
                     {this.state.chores.map((chore, i) =>
                         <Marker key={i} coordinate={{latitude: chore.longitude, longitude: chore.latitude}}
                                 title={chore.name}/>
