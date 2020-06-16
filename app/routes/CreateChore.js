@@ -4,6 +4,7 @@ import NavBar from "../components/NavBar";
 import axios from 'axios';
 import {connect} from "react-redux";
 import {Parameters} from '../../global';
+import {Actions} from 'react-native-router-flux';
 
 class CreateChore extends Component {
     constructor(props) {
@@ -33,7 +34,7 @@ class CreateChore extends Component {
 
     saveChore = () => {
         let chore = {
-            title: this.state.title,
+            name: this.state.title,
             description: this.state.description,
             longitude: 52.4893802,
             latitude: 6.5548126,
@@ -44,7 +45,7 @@ class CreateChore extends Component {
                 'Authorization': 'Bearer ' + this.props.token,
             }
         }).then((response) => {
-            console.log(response);
+            Actions.profile();
         }).catch((error) => {
             console.log(error);
         });
@@ -58,7 +59,6 @@ class CreateChore extends Component {
                     <View style={styles.uploadImageButtonContainer}>
                         <Button
                             title={'Upload een afbeelding'}
-                            color={"blue"}
                             onPress={() => {
                                 this.requestCameraAccess()
                             }}
@@ -77,7 +77,6 @@ class CreateChore extends Component {
                     <View style={styles.uploadImageButtonContainer}>
                         <Button
                             title={'Opslaan'}
-                            color={"red"}
                             onPress={() => {
                                 this.saveChore()
                             }}

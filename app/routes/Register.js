@@ -4,30 +4,34 @@ import AppLayout from '../components/AppLayout';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Button, Text} from 'react-native-elements';
 import {Actions} from 'react-native-router-flux';
-import {setToken, updateChores, setUserData, updatePersonalChores} from "../actions";
-import {connect} from 'react-redux';
 import axios from 'axios';
 import {Parameters} from "../../global";
-import Authenticate from '../classes/Authenticate';
+import {setToken, setUserData, updateChores, updatePersonalChores} from "../actions";
+import {connect} from "react-redux";
 
 const image = {uri: "https://images.unsplash.com/photo-1589705436822-720a68b246fb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"};
 
-class Login extends Component {
+class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: 'test@test.nl',
-            password: '123',
+            name: null,
+            email: null,
+            password: null,
+            c_password: null,
         }
     }
 
-    login = () => {
+    register = () => {
         let credentials = {
+            'name': this.state.name,
             'email': this.state.email,
             'password': this.state.password,
-        };
-
-        axios.post(Parameters.apiDomain + '/auth/login', credentials).then((response) => {
+            'c_password': this.state.c_password,
+        }
+        console.log(credentials);
+        axios.post(Parameters.apiDomain + '/auth/register', credentials).then((response) => {
+            console.log(response);
             if (response.data.statuscode === 200) {
                 let user_id = response.data.data[0].id;
                 let token = response.data.data[0].token;
@@ -36,35 +40,11 @@ class Login extends Component {
                 this.requestPersonalChores(token, user_id);
                 this.populateChoresReducer(token);
             }
-        }).then(() =>{
+        }).then(() => {
             Actions.home();
         }).catch((error) => {
+            console.log(error);
             console.error(error)
-        })
-    }
-
-    populateChoresReducer = (token) => {
-        axios.get(Parameters.apiDomain + '/chores/chores', {
-            headers: {
-                'Authorization': 'Bearer ' + token,
-            }
-        }).then((response) => {
-            console.log(response);
-            this.props.dispatch(updateChores(response.data.data));
-        }).catch((error) => {
-            console.log(error);
-        });
-    }
-
-    requestPersonalChores = (token, user_id) => {
-        axios.get(Parameters.apiDomain + '/chores/chores/' + user_id, {
-            headers: {
-                'Authorization': 'Bearer ' + token,
-            }
-        }).then((response) => {
-            this.props.dispatch(updatePersonalChores(response.data.data));
-        }).catch((error) => {
-            console.log(error);
         });
     }
 
@@ -111,21 +91,37 @@ class Login extends Component {
                     <View style={styles.container}>
                         <Text style={styles.text}>Welkom!</Text>
                         <View style={styles.form}>
-                            <TextInput placeholder='E-mail'
-                                       leftIcon={<Icon name='user' size={24} color='black'/>}
-                                       onChangeText={(value) => {this.setState({email: value})}}
+                            <TextInput
+                                placeholder='Gebruikersnaam'
+                                leftIcon={<Icon name='user' size={24} color='black'/>}
+                                onChangeText={(value) => {this.setState({name: value})}}
                             />
-                            <TextInput placeholder='Wachtwoord'
-                                       secureTextEntry={true}
-                                       leftIcon={<Icon name='lock' size={24} color='black'/>}
-                                       onChangeText={(value) => {this.setState({password: value})}}
+                            <TextInput
+                                placeholder='E-mail'
+                                leftIcon={<Icon name='user' size={24} color='black'/>}
+                                onChangeText={(value) => {this.setState({email: value})}}
                             />
-                            <Button onPress={() => this.login()} title="Aanmelden"/>
-                        </View>
-                        <View style={styles.registerButton}>
+                            <TextInput
+                                placeholder='Wachtwoord'
+                                secureTextEntry={true}
+                                leftIcon={<Icon name='user' size={24} color='black'/>}
+                                onChangeText={(value) => {this.setState({password: value})}}
+                            />
+                            <TextInput
+                                placeholder='Wachtwoord controle'
+                                secureTextEntry={true}
+                                leftIcon={<Icon name='lock' size={24} color='black'/>}
+                                onChangeText={(value) => {this.setState({c_password: value})}}
+                            />
                             <Button
-                                title="Nog geen account?"
-                                onPress={() => Actions.register()}
+                                onPress={() => this.register()}
+                                title="Registreren"
+                            />
+                        </View>
+                        <View style={styles.buttonRegisteren}>
+                            <Button
+                                title="al een account? "
+                                onPress={() => Actions.login()}
                             />
                         </View>
                     </View>
@@ -135,17 +131,13 @@ class Login extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({
-    token: state.userReducer.token,
-});
-
-export default connect(mapStateToProps)(Login);
+export default connect()(Register);
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "center",
-        padding: 10
+        padding: 10,
     },
     text: {
         color: 'white',
@@ -158,20 +150,17 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         opacity: 0.7,
     },
-
     form: {
         justifyContent: "center",
         backgroundColor: "white",
         color: 'black',
         opacity: 0.7,
     },
-
-    registerButton: {
+    buttonRegisteren: {
         margin: 8,
         height: 75,
         marginTop: 0,
         borderRadius: 24,
         justifyContent: 'center',
-
     }
 });
