@@ -25,7 +25,7 @@ export default class Profile extends React.Component {
                 console.error(error)
             })
 
-        axios.get('http://10.0.2.2:8000/user/chores/' + this.state.id)
+        axios.get('http://10.0.2.2:8000/chores/chores/' + this.state.id)
             .then(res => {
                 const choreList = res.data;
                 this.setState({ chores: choreList.data })

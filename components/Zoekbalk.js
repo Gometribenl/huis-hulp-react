@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, TextInput } from 'react-native';
 
 const styles = StyleSheet.create({
     header: {
@@ -19,7 +19,7 @@ export default class Zoekbalk extends React.Component {
     render() {
         return (
             <View style={styles.header}>
-
+                <TextInput placeholder="Zoeken..."/>
             </View>
         );
     }
