@@ -1,15 +1,14 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, Button} from 'react-native';
-import ListSlider from '../components/ListSlider';
+import { StyleSheet, View, Text } from 'react-native';
 import Navbar from '../components/Navbar';
+import ListSlider from '../components/ListSlider';
 import Googlemaps from "../components/Googlemaps";
 import Zoekbalk from "../components/Zoekbalk";
-import AppLayout from '../components/AppLayout';
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    },
+    }
 });
 
 export default class Home extends Component {
@@ -20,16 +19,15 @@ export default class Home extends Component {
 
     render() {
         return (
-            <AppLayout>
              <View style={styles.container}>
+
                   <Zoekbalk/>
                   <Googlemaps/>
+                  <ListSlider/>
+                  <Navbar/>
+
              </View>
-
-                <ListSlider/>
-                <Navbar/>
-
-            </AppLayout>
         );
     }
 }
+

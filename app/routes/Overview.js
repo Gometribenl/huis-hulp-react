@@ -1,16 +1,17 @@
 import React from 'react';
-import {
-    View,
-    StyleSheet,
-    ScrollView,
-    TextInput,
-    TouchableHighlight,
-} from 'react-native';
 import axios from 'axios';
 import {Actions} from "react-native-router-flux";
 import Navbar from '../components/Navbar';
 import Zoekbalk from "../components/Zoekbalk";
 
+import {
+    ScrollView,
+    StyleSheet,
+    TextInput,
+    TouchableHighlight,
+    View
+} from 'react-native';
+import {connect} from 'react-redux';
 import AppLayout from "../components/AppLayout";
 import {Text, Image, Input, Card} from "react-native-elements";
 
@@ -32,28 +33,14 @@ const styles = StyleSheet.create({
     },
 });
 
-export default class Overview extends React.Component {
-
+class Overview extends React.Component {
     state = {
         chores: [],
     };
 
-    constructor(props) {
-        super(props);
-
-        axios.get('http://10.0.2.2:8000/chores/chores')
-            .then(res => {
-                const choreList = res.data;
-                this.setState({chores: choreList.data})
-            })
-            .catch((error) => {
-                console.error(error)
-            })
-    }
-
     goToCard = (index) => {
         console.log('Action!');
-        console.log(this.state.chores[index]);
+        console.log(this.props.chores[index]);
     }
 
     render() {
@@ -62,7 +49,6 @@ export default class Overview extends React.Component {
                 <Zoekbalk/>
 
                 <ScrollView style={styles.container}>
-
                     {
                         this.state.chores.map((chore, i) => {
                             let style;
@@ -80,8 +66,14 @@ export default class Overview extends React.Component {
                         })
                     }
                 </ScrollView>
-                <Navbar/>
             </AppLayout>
         );
     }
 }
+
+const mapStateToProps = (state) => ({
+    token: state.userReducer.token,
+    chores: state.choresReducer.chores,
+});
+
+export default connect(mapStateToProps)(Overview);

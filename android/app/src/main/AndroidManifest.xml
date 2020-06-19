@@ -2,6 +2,10 @@
   package="com.helpendehandjes">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
 
     <application
       android:name=".MainApplication"
@@ -26,7 +30,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDu_yR8t3P3QyuUiq5kj9UWbkDsPw5j8LA"/>
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
-
     </application>
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
