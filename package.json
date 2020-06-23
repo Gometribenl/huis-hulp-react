@@ -10,6 +10,9 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.29",
+    "@fortawesome/free-solid-svg-icons": "^5.13.1",
+    "@fortawesome/react-native-fontawesome": "^0.2.5",
     "@react-native-community/geolocation": "^2.0.2",
     "@react-native-firebase/app": "^7.2.0",
     "axios": "^0.19.2",
@@ -17,11 +20,14 @@
     "react-native": "0.62.2",
     "react-native-elements": "^2.0.2",
     "react-native-gesture-handler": "^1.6.1",
+    "react-native-google-places": "^3.1.2",
+    "react-native-google-places-autocomplete": "^1.7.2",
     "react-native-maps": "^0.27.1",
     "react-native-material-bottom-navigation": "^1.0.5",
     "react-native-reanimated": "^1.9.0",
     "react-native-router-flux": "^4.2.0",
-    "react-native-screens": "^2.8.0",
+    "react-native-screens": "^2.9.0",
+    "react-native-svg": "^12.1.0",
     "react-native-vector-icons": "^6.6.0",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
@@ -33,9 +39,10 @@
     "@react-native-community/eslint-config": "0.0.5",
     "axios": "^0.19.2",
     "babel-jest": "24.9.0",
-    "eslint": "6.8.0",
+    "eslint": "^6.8.0",
     "jest": "24.9.0",
     "metro-react-native-babel-preset": "0.58.0",
+    "react-native-google-autocomplete": "^0.1.9",
     "react-test-renderer": "16.11.0"
   },
   "jest": {
