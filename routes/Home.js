@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import Navbar from '../components/Navbar';
+import NavBar from "../app/components/NavBar";
 import ListSlider from '../components/ListSlider';
-import Googlemaps from "../components/Googlemaps";
+import GoogleMaps from "../app/components/GoogleMaps";
 import Zoekbalk from "../components/Zoekbalk";
 
 const styles = StyleSheet.create({

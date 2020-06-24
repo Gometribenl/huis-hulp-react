@@ -4,6 +4,7 @@ import {Actions} from 'react-native-router-flux';
 import axios from 'axios';
 import AppLayout from "../components/AppLayout";
 import NavBar from "../components/NavBar";
+import ChoreComponent from "../components/ChoreComponent";
 import {connect} from "react-redux";
 
 class Profile extends React.Component {
@@ -32,6 +33,9 @@ class Profile extends React.Component {
                         <Text style={styles.title}>
                             Verzoeken
                         </Text>
+
+                        <ChoreComponent id={1}/>
+
                         {
                             this.props.personalChores.map((chore, i) =>
                                 <View key={i} style={styles.card}>

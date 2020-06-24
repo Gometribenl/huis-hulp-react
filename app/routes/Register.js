@@ -30,7 +30,8 @@ class Register extends Component {
             'c_password': this.state.c_password,
         }
         console.log(credentials);
-        axios.post(Parameters.apiDomain + '/auth/register', credentials).then((response) => {
+        axios.post(Parameters.apiDomain + '/auth/register', credentials)
+            .then((response) => {
             console.log(response);
             if (response.data.statuscode === 200) {
                 let user_id = response.data.data[0].id;

@@ -1,9 +1,5 @@
 import React from 'react';
-import axios from 'axios';
 import {Actions} from "react-native-router-flux";
-import Navbar from '../components/Navbar';
-import Zoekbalk from "../components/Zoekbalk";
-
 import {
     ScrollView,
     StyleSheet,
@@ -13,7 +9,13 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import AppLayout from "../components/AppLayout";
-import {Text, Image, Input, Card} from "react-native-elements";
+import {
+    Text,
+    Image,
+    Input,
+    Card,
+    Overlay
+} from "react-native-elements";
 
 const styles = StyleSheet.create({
     card: {
@@ -35,36 +37,64 @@ const styles = StyleSheet.create({
 
 class Overview extends React.Component {
     state = {
-        chores: [],
+        visible: false,
+        showCard: {},
     };
 
     goToCard = (index) => {
         console.log('Action!');
-        console.log(this.props.chores[index]);
+        console.log(this.props.chores[index].user_id);
+        this.setState({showCard: this.props.chores[index]}, this.toggleVisibility)
+    }
+
+    toggleVisibility = () => {
+        this.setState({
+            visible: !this.state.visible,
+        })
     }
 
     render() {
         return (
             <AppLayout>
-                <Zoekbalk/>
 
                 <ScrollView style={styles.container}>
                     {
-                        this.state.chores.map((chore, i) => {
+                        this.props.chores.map((chore, i) => {
                             let style;
 
-                            if(i === 0) {style = styles.cardFirstChild}
-                            else if(i === this.state.chores.length - 1) {style = styles.cardLastChild}
-                            else {style = styles.card}
+                            if (i === 0) {
+                                style = styles.cardFirstChild
+                            } else if (i === this.props.chores.length - 1) {
+                                style = styles.cardLastChild
+                            } else {
+                                style = styles.card
+                            }
 
                             return (
-                                <Card title={chore.name} key={i} containerStyle={style}>
-                                    <Text numberOfLines={2}>{chore.desc}</Text>
-                                    <Text>5km bij jou vandaan</Text>
-                                </Card>
+                                <TouchableHighlight
+                                    activeOpacity={0.6}
+                                    underlayColor="#DDDDDD"
+                                    onPress={() => this.goToCard(i)}
+                                    key={i}
+                                >
+
+                                    <Card title={chore.name} containerStyle={style}>
+                                        <Text numberOfLines={2}>{chore.desc}</Text>
+                                        <Text>5km bij jou vandaan</Text>
+                                    </Card>
+
+                                </TouchableHighlight>
                             )
                         })
                     }
+
+
+                    <Overlay isVisible={this.state.visible} fullScreen={true}>
+                        <Card title={this.state.showCard.name}>
+                            <Text numberOfLines={2}>{this.state.showCard.desc}</Text>
+                            <Text>5km bij jou vandaan</Text>
+                        </Card>
+                    </Overlay>
                 </ScrollView>
             </AppLayout>
         );

@@ -47,7 +47,6 @@ class GoogleMaps extends React.Component {
     getCurrentPosition() {
         Geolocation.getCurrentPosition(
             (position) => {
-                console.log(position);
                 this.setState({
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude,
