@@ -42,6 +42,7 @@ class Profile extends React.Component {
                         }
                     </View>
                 </ScrollView>
+                <NavBar/>
             </AppLayout>
         );
     }

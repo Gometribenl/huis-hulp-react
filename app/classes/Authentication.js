@@ -1,10 +1,10 @@
 import store from "../store/store";
 import axios from "axios";
 import {Parameters} from "../../global";
-import {setUserData, updateChores, updatePersonalChores} from "../actions";
+import {initChatReducer, setUserData, updateChores, updatePersonalChores} from '../actions';
 
 export default class Authentication {
-    static populateUserReducer(token, user_id) {
+     static populateUserReducer(token, user_id) {
         axios.get(Parameters.apiDomain + '/user/user/' + user_id, {
             headers: {
                 'Authorization': 'Bearer ' + token,
@@ -16,7 +16,7 @@ export default class Authentication {
         })
     }
 
-    static populateChoresReducer(token) {
+     static populateChoresReducer(token) {
         axios.get(Parameters.apiDomain + '/chores/chores', {
             headers: {
                 'Authorization': 'Bearer ' + token,
@@ -28,7 +28,7 @@ export default class Authentication {
         });
     }
 
-    static requestPersonalChores(token, user_id) {
+     static requestPersonalChores(token, user_id) {
         axios.get(Parameters.apiDomain + '/chores/chores/' + user_id, {
             headers: {
                 'Authorization': 'Bearer ' + token,
@@ -39,4 +39,15 @@ export default class Authentication {
             console.log(error);
         });
     }
+   static populateChatReducer(token) {
+        axios.get(Parameters.apiDomain + '/message/chatroom', {
+            headers: {
+                'Authorization': 'Bearer ' + token,
+            },
+        }).then((response) => {
+            store.dispatch(initChatReducer(response.data.data));
+        }).catch((error) => {
+            console.error(error);
+        });
+    };
 }
