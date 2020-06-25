@@ -21,6 +21,12 @@ export default class NavBar extends Component {
             barColor: AppColors.AppColors.primary.regular,
             badgeCount: 0,
         },
+        {
+            key: 'chat',
+            icon: 'user',
+            barColor: AppColors.AppColors.primary.regular,
+            badgeCount: 0,
+        },
     ];
     renderIcon = icon => () => {
         return <Icon size={24} color="white" name={icon}/>;

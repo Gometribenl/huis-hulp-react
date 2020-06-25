@@ -17,5 +17,5 @@ export class AppColors {
 }
 
 export class Parameters {
-    static apiDomain = 'http://10.0.2.2:8000';
+    static apiDomain = 'http://192.168.178.87:80';
 }

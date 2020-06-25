@@ -58,7 +58,6 @@ class GoogleMaps extends React.Component {
             {enableHighAccuracy: false, timeout: 200000, maximumAge: 1000},
         );
     }
-
     onRegionChange = (region) => {
         console.log('onRegionChange', region);
     };

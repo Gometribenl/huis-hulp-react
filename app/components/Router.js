@@ -6,11 +6,13 @@ import Overview from "../routes/Overview";
 import Login from "../routes/Login";
 import Register from "../routes/Register";
 import CreateChore from "../routes/CreateChore";
-import {connect} from 'react-redux'
+import Chat from '../routes/Chat';
+import Chatroom from '../routes/Chatroom';
+import {connect} from 'react-redux';
 
 class App extends Component {
     componentDidMount() {
-        this.props.token ? Actions.home() : Actions.login();
+        this.props.token ? Actions.chat() : Actions.login();
     }
 
     render() {
@@ -47,6 +49,16 @@ class App extends Component {
                         key='overview'
                         title='Overview'
                     />
+                    <Scene
+                        component={Chat}
+                        key='chat'
+                        title='Chat'
+                    />
+                    <Scene
+                    component={Chatroom}
+                    key='chatroom'
+                    title='Chatroom'
+                />
                 </Scene>
             </Router>
         )
