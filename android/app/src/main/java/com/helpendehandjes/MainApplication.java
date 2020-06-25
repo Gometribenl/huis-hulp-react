@@ -10,7 +10,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-
+import com.arttitude360.reactnative.rngoogleplaces.RNGooglePlacesPackage;
 
 import com.airbnb.android.react.maps.MapsPackage;
 
@@ -52,6 +52,15 @@ public class MainApplication extends Application implements ReactApplication {
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
   }
+
+@Override
+protected List<ReactPackage> getPackages() {
+  return Arrays.<ReactPackage>asList(
+      new MainReactPackage(),
+
+      new RNGooglePlacesPackage() //<-- Add line
+  );
+}
 
   /**
    * Loads Flipper in React Native templates. Call this in the onCreate method with something like

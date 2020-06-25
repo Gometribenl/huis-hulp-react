@@ -21,7 +21,7 @@ export default class Home extends Component {
         return (
              <View style={styles.container}>
 
-                  <Zoekbalk/>
+p                  <Zoekbalk/>
                   <Googlemaps/>
                   <ListSlider/>
                   <Navbar/>

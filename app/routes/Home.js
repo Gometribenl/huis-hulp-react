@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import ListSlider from '../components/ListSlider';
 import NavBar from '../components/NavBar';
 import GoogleMaps from "../components/GoogleMaps";
-import SearchBar from "../components/SearchBar";
+import SearchBarHome from "../components/SearchBarHome";
 import AppLayout from '../components/AppLayout';
 
 const styles = StyleSheet.create({
@@ -22,7 +22,7 @@ export default class Home extends Component {
             <AppLayout>
                 <View style={styles.container}>
                     <GoogleMaps/>
-                    <SearchBar/>
+                    <SearchBarHome/>
                 </View>
                 <ListSlider/>
                 <NavBar/>

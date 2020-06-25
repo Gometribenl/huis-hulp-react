@@ -21,6 +21,8 @@ buildscript {
     }
     dependencies {
         classpath("com.android.tools.build:gradle:3.5.2")
+        compile project(':react-native-google-places')
+
 
 
 
@@ -45,6 +47,18 @@ allprojects {
 
         google()
         jcenter()
-        maven { url 'https://www.jitpack.io' }
+        maven { url "https://maven.google.com" }
     }
 }
+
+android {
+    defaultConfig {
+
+        multiDexEnabled true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
