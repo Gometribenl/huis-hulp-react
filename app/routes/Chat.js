@@ -8,13 +8,22 @@ import {Actions} from 'react-native-router-flux';
 import NavBar from '../components/NavBar';
 
 class Chat extends Component {
+
+    determineRoomName = (chatroom) => {
+        if (chatroom.receiver.id === this.props.user_id) {
+            return chatroom.sender.name;
+        } else {
+            return chatroom.receiver.name;
+        }
+    }
+
     render() {
         return (
             <AppLayout>
                 <View style={styles.container}>
                     {this.props.chatrooms.map((chatroom) =>
                        <View>
-                        <Button title={'Chatrooms'} key={chatroom.id} onPress={() => Actions.chatroom( {chatroom: chatroom.id})}></Button>
+                        <Button title={this.determineRoomName(chatroom)} key={chatroom.id} onPress={() => Actions.chatroom( {chatroom: chatroom.id})}></Button>
                        </View>
                        )}
                 </View>
@@ -32,5 +41,6 @@ const styles = StyleSheet.create ({
 
 const mapStateToProps = (state) => ({
     chatrooms: state.chatReducer.chatrooms,
+    user_id: state.userReducer.user.id,
 });
 export default connect(mapStateToProps)(Chat);
