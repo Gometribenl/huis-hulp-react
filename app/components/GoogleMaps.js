@@ -59,11 +59,11 @@ class GoogleMaps extends React.Component {
     }
 
     onRegionChange = (region) => {
-        console.log('onRegionChange', region);
+        //console.log('onRegionChange', region);
     };
 
     onRegionChangeComplete = (region) => {
-        console.log('onRegionChangeComplete', region);
+        //console.log('onRegionChangeComplete', region);
     };
 
     render() {

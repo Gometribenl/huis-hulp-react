@@ -80,18 +80,6 @@ class Login extends Component {
         })
     }
 
-    requestPersonalChores = (token, user_id) => {
-        axios.get(Parameters.apiDomain + '/chores/chores/' + user_id, {
-            headers: {
-                'Authorization': 'Bearer ' + token,
-            }
-        }).then((response) => {
-            this.props.dispatch(updatePersonalChores(response.data.data));
-        }).catch((error) => {
-            console.log(error);
-        });
-    }
-
     render() {
         return (
             <AppLayout>

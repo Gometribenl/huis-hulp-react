@@ -1,21 +1,27 @@
 import React from 'react';
 import {Actions} from "react-native-router-flux";
+import {connect} from 'react-redux';
+import AppLayout from "../components/AppLayout";
+import Axios from 'axios';
+import {Parameters} from "../../global";
 import {
     ScrollView,
     StyleSheet,
     TextInput,
     TouchableHighlight,
-    View
+    View,
+    Button,
+    Image,
+    Alert
 } from 'react-native';
-import {connect} from 'react-redux';
-import AppLayout from "../components/AppLayout";
+
 import {
     Text,
-    Image,
     Input,
     Card,
     Overlay
 } from "react-native-elements";
+
 
 const styles = StyleSheet.create({
     card: {
@@ -32,6 +38,13 @@ const styles = StyleSheet.create({
         padding: 10,
         color: '#363636',
         backgroundColor: '#dec9a9',
+    },
+    overlay: {
+        backgroundColor: 'pink',
+    },
+    backBtn: {
+        marginBottom: 0,
+        position: 'absolute',
     },
 });
 
@@ -51,6 +64,55 @@ class Overview extends React.Component {
         this.setState({
             visible: !this.state.visible,
         })
+    }
+
+    makeStyle = () => {
+        if (this.props.user_id === this.state.showCard.user_id) {
+            return {}
+        } else {
+            return {display: 'none'}
+        }
+    }
+
+    editChore = () => {
+        console.log('Toeter Edit');
+    }
+
+    deleteChore = () => {
+        console.log('Toeter Delete');
+
+        Alert.alert(
+            'Are you sure you want to delete ' + this.state.showCard.name,
+            'You can\'t undo this!',
+            [
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel'
+                },
+                {
+                    text: 'Delete',
+                    onPress: () => this.deleteChoreAxios()
+                }
+            ],
+            { cancelable: false }
+        );
+    }
+
+    deleteChoreAxios = () => {
+
+        Axios.delete(Parameters.apiDomain + '/chores/chores/' + this.state.showCard.id, {
+            headers: {
+                'Authorization': 'Bearer ' + this.props.token,
+            },
+            data: { }
+        })
+            .then((response) => {
+                console.log(response)
+                alert('When you log on the next time your chore will be gone');
+            }).catch((error) => {
+            console.log(error);
+        });
     }
 
     render() {
@@ -76,9 +138,10 @@ class Overview extends React.Component {
                                     underlayColor="#DDDDDD"
                                     onPress={() => this.goToCard(i)}
                                     key={i}
+                                    style={style}
                                 >
 
-                                    <Card title={chore.name} containerStyle={style}>
+                                    <Card title={chore.name}>
                                         <Text numberOfLines={2}>{chore.desc}</Text>
                                         <Text>5km bij jou vandaan</Text>
                                     </Card>
@@ -89,11 +152,24 @@ class Overview extends React.Component {
                     }
 
 
-                    <Overlay isVisible={this.state.visible} fullScreen={true}>
+                    <Overlay isVisible={this.state.visible} fullScreen={true} overlayStyle={styles.overlay}>
+
+                        <Image
+                            source={require('../images/hulp.png')}
+                            style={{width: '100%', height: 200}}
+                        />
+
                         <Card title={this.state.showCard.name}>
                             <Text numberOfLines={2}>{this.state.showCard.desc}</Text>
-                            <Text>5km bij jou vandaan</Text>
+                            <Text>Gemaakt door: {this.state.showCard.user_id}</Text>
                         </Card>
+
+                        <View style={this.makeStyle()}>
+                            <Button title={"Edit"} onPress={() => {this.editChore()}}> </Button>
+                            <Button title={"Delete"} onPress={() => {this.deleteChore()}}> </Button>
+                        </View>
+                        <Button onPress={() => this.toggleVisibility()} title={"Go back"}
+                                style={styles.backBtn}> </Button>
                     </Overlay>
                 </ScrollView>
             </AppLayout>
@@ -104,6 +180,7 @@ class Overview extends React.Component {
 const mapStateToProps = (state) => ({
     token: state.userReducer.token,
     chores: state.choresReducer.chores,
+    user_id: state.userReducer.user.id
 });
 
 export default connect(mapStateToProps)(Overview);
