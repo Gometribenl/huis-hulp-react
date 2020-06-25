@@ -1,47 +1,176 @@
 import React from 'react';
-import {Image, ScrollView, StyleSheet, Text, TextInput, TouchableHighlight, View} from 'react-native';
+import {Actions} from "react-native-router-flux";
 import {connect} from 'react-redux';
 import AppLayout from "../components/AppLayout";
+import Axios from 'axios';
+import {Parameters} from "../../global";
+import {
+    ScrollView,
+    StyleSheet,
+    TextInput,
+    TouchableHighlight,
+    View,
+    Button,
+    Image,
+    Alert
+} from 'react-native';
+
+import {
+    Text,
+    Input,
+    Card,
+    Overlay
+} from "react-native-elements";
+
+
+const styles = StyleSheet.create({
+    card: {
+        borderWidth: 0,
+    },
+    cardFirstChild: {
+        marginTop: 70,
+    },
+    cardLastChild: {
+        marginBottom: 30,
+    },
+    container: {
+        flex: 1,
+        padding: 10,
+        color: '#363636',
+        backgroundColor: '#dec9a9',
+    },
+    overlay: {
+        backgroundColor: 'pink',
+    },
+    backBtn: {
+        marginBottom: 0,
+        position: 'absolute',
+    },
+});
 
 class Overview extends React.Component {
     state = {
-        chores: [],
+        visible: false,
+        showCard: {},
     };
 
     goToCard = (index) => {
         console.log('Action!');
-        console.log(this.props.chores[index]);
+        console.log(this.props.chores[index].user_id);
+        this.setState({showCard: this.props.chores[index]}, this.toggleVisibility)
+    }
+
+    toggleVisibility = () => {
+        this.setState({
+            visible: !this.state.visible,
+        })
+    }
+
+    makeStyle = () => {
+        if (this.props.user_id === this.state.showCard.user_id) {
+            return {}
+        } else {
+            return {display: 'none'}
+        }
+    }
+
+    editChore = () => {
+        console.log('Toeter Edit');
+    }
+
+    deleteChore = () => {
+        console.log('Toeter Delete');
+
+        Alert.alert(
+            'Are you sure you want to delete ' + this.state.showCard.name,
+            'You can\'t undo this!',
+            [
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel'
+                },
+                {
+                    text: 'Delete',
+                    onPress: () => this.deleteChoreAxios()
+                }
+            ],
+            { cancelable: false }
+        );
+    }
+
+    deleteChoreAxios = () => {
+
+        Axios.delete(Parameters.apiDomain + '/chores/chores/' + this.state.showCard.id, {
+            headers: {
+                'Authorization': 'Bearer ' + this.props.token,
+            },
+            data: { }
+        })
+            .then((response) => {
+                console.log(response)
+                alert('When you log on the next time your chore will be gone');
+            }).catch((error) => {
+            console.log(error);
+        });
     }
 
     render() {
         return (
             <AppLayout>
+
                 <ScrollView style={styles.container}>
-                    <View style={styles.searchBar}>
-                        <Text style={styles.label}>Sorteren op: </Text>
-                        <TextInput
-                            style={styles.searchInput}
-                            placeholder="....."
-                            id="Search"
-                        />
-                    </View>
                     {
-                        this.props.chores.map((chore, i) =>
-                            <TouchableHighlight key={i} onPress={() => this.goToCard(i)} underlayColor={'#c6c6c6'}>
-                                <View style={styles.card}>
-                                    <Image
-                                        style={styles.helpimg}
-                                        source={require('../images/hulp.png')}
-                                    />
-                                    <View>
-                                        <Text style={styles.cardTitle} numberOfLines={2}>{chore.name}</Text>
-                                        <Text style={styles.cardDesc} numberOfLines={2}>{chore.desc}</Text>
-                                        <Text style={styles.cardCaption}>5km bij jou vandaan</Text>
-                                    </View>
-                                </View>
-                            </TouchableHighlight>
-                        )
+                        this.props.chores.map((chore, i) => {
+                            let style;
+
+                            if (i === 0) {
+                                style = styles.cardFirstChild
+                            } else if (i === this.props.chores.length - 1) {
+                                style = styles.cardLastChild
+                            } else {
+                                style = styles.card
+                            }
+
+                            return (
+                                <TouchableHighlight
+                                    activeOpacity={0.6}
+                                    underlayColor="#DDDDDD"
+                                    onPress={() => this.goToCard(i)}
+                                    key={i}
+                                    style={style}
+                                >
+
+                                    <Card title={chore.name}>
+                                        <Text numberOfLines={2}>{chore.desc}</Text>
+                                        <Text>5km bij jou vandaan</Text>
+                                    </Card>
+
+                                </TouchableHighlight>
+                            )
+                        })
                     }
+
+
+                    <Overlay isVisible={this.state.visible} fullScreen={true} overlayStyle={styles.overlay}>
+
+                        <Image
+                            source={require('../images/hulp.png')}
+                            style={{width: '100%', height: 200}}
+                        />
+
+                        <Card title={this.state.showCard.name}>
+                            <Text numberOfLines={2}>{this.state.showCard.desc}</Text>
+                            <Text>Gemaakt door: {this.state.showCard.user_id}</Text>
+                        </Card>
+
+                        <View style={this.makeStyle()}>
+                            <Button title={"Edit"} onPress={() => {this.editChore()}}> </Button>
+                            <Button title={"Delete"} onPress={() => {this.deleteChore()}}> </Button>
+                        </View>
+                        <Button onPress={() => this.toggleVisibility()} title={"Go back"}
+                                style={styles.backBtn}> </Button>
+                    </Overlay>
                 </ScrollView>
             </AppLayout>
         );
@@ -51,69 +180,7 @@ class Overview extends React.Component {
 const mapStateToProps = (state) => ({
     token: state.userReducer.token,
     chores: state.choresReducer.chores,
+    user_id: state.userReducer.user.id
 });
 
 export default connect(mapStateToProps)(Overview);
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 24,
-    },
-    info: {
-        borderWidth: 2,
-        borderColor: "#20232a",
-        borderRadius: 30,
-        padding: 15,
-        margin: 5,
-        fontSize: 20,
-        color: '#8d8d8d',
-    },
-    title: {
-        fontSize: 30,
-        color: '#666666',
-    },
-    card: {
-        borderColor: 'black',
-        borderWidth: 2,
-        marginVertical: 15,
-        marginHorizontal: 0,
-        flexDirection: 'row',
-        flex: 1,
-        height: 150,
-    },
-    cardTitle: {
-        fontSize: 25,
-        maxWidth: '80%',
-        color: '#666666',
-    },
-    cardDesc: {
-        fontSize: 20,
-        maxWidth: '80%',
-        color: '#8d8d8d',
-    },
-    cardCaption: {
-        color: '#8d8d8d',
-        fontSize: 16,
-        position: 'absolute',
-        right: 30,
-        bottom: 0,
-    },
-    helpimg: {
-        width: '25%',
-        height: 'auto',
-        marginRight: 10,
-        backgroundColor: '#d9d9d9',
-    },
-    searchBar: {},
-    label: {
-        fontSize: 25,
-    },
-    searchInput: {
-        borderColor: '#666666',
-        borderWidth: 2,
-        height: 40,
-        borderRadius: 30,
-        backgroundColor: '#f3f3f3',
-    },
-});

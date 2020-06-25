@@ -4,6 +4,7 @@ import {Actions} from 'react-native-router-flux';
 import axios from 'axios';
 import AppLayout from "../components/AppLayout";
 import NavBar from "../components/NavBar";
+import ChoreComponent from "../components/ChoreComponent";
 import {connect} from "react-redux";
 
 class Profile extends React.Component {
@@ -15,9 +16,13 @@ class Profile extends React.Component {
                         <Text style={styles.title}>Account gegevens</Text>
 
                         <Text style={styles.info}>Naam: {this.props.name}</Text>
-                        <Text style={styles.info}>Adres: {this.props.address}</Text>
-                        <Text style={styles.info}>Woonplaats: {this.props.residence}</Text>
 
+                        <Text style={styles.info}>
+                            Adres: {this.props.address}
+                        </Text>
+                        <Text style={styles.info}>
+                            Woonplaats: {this.props.residence}
+                        </Text>
                     </View>
 
                     <Button onPress={() => {
@@ -25,20 +30,26 @@ class Profile extends React.Component {
                     }} title="Nieuw Verzoek"/>
 
                     <View>
-                        <Text style={styles.title}>Verzoeken</Text>
+                        <Text style={styles.title}>
+                            Verzoeken
+                        </Text>
+
+                        <ChoreComponent id={1}/>
+
                         {
                             this.props.personalChores.map((chore, i) =>
                                 <View key={i} style={styles.card}>
-                                    <Image
-                                        style={styles.helping}
-                                        source={require('../images/hulp.png')}
-                                    />
+                                    <Image style={styles.helping} source={require('../images/hulp.png')}/>
                                     <View>
-                                        <Text style={styles.cardTitle} numberOfLines={2}>{chore.name}</Text>
-                                        <Text style={styles.cardDesc} numberOfLines={1}>{chore.desc}</Text>
+                                        <Text style={styles.cardTitle} numberOfLines={2}>
+                                            {chore.name}
+                                        </Text>
+
+                                        <Text style={styles.cardDesc} numberOfLines={1}>
+                                            {chore.desc}
+                                        </Text>
                                     </View>
-                                </View>
-                            )
+                                </View>)
                         }
                     </View>
                 </ScrollView>

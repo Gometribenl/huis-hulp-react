@@ -52,7 +52,6 @@ export default class NavBar extends Component {
                 style={{
                     paddingBottom: Platform.select({
                         ios: 0,
-
                     }),
                     height: Platform.select({
                         default: 56,
