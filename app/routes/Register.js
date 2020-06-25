@@ -29,7 +29,6 @@ class Register extends Component {
             'password': this.state.password,
             'c_password': this.state.c_password,
         }
-        console.log(credentials);
         axios.post(Parameters.apiDomain + '/auth/register', credentials)
             .then((response) => {
             console.log(response);
@@ -44,7 +43,6 @@ class Register extends Component {
         }).then(() => {
             Actions.home();
         }).catch((error) => {
-            console.log(error);
             console.error(error)
         });
     }

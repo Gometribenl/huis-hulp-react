@@ -23,7 +23,7 @@ export default class NavBar extends Component {
         },
         {
             key: 'chat',
-            icon: 'user',
+            icon: 'comments',
             barColor: AppColors.AppColors.primary.regular,
             badgeCount: 0,
         },

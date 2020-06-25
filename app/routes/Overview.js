@@ -55,8 +55,6 @@ class Overview extends React.Component {
     };
 
     goToCard = (index) => {
-        console.log('Action!');
-        console.log(this.props.chores[index].user_id);
         this.setState({showCard: this.props.chores[index]}, this.toggleVisibility)
     }
 
@@ -75,12 +73,10 @@ class Overview extends React.Component {
     }
 
     editChore = () => {
-        console.log('Toeter Edit');
+        console.log('Edit');
     }
 
     deleteChore = () => {
-        console.log('Toeter Delete');
-
         Alert.alert(
             'Are you sure you want to delete ' + this.state.showCard.name,
             'You can\'t undo this!',
